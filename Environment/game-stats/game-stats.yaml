@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-game-stats
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-game-stats
+  template:
+    metadata:
+      labels:
+        app: service-game-stats
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-game-stats
+          image: fanclashdevelopers/service.game-stats-client:v1.0
+          env:
+            - name: "PORT"
+              value: "8087"
+            - name: "ADMIN_NAMESPACE"
+              value: "game-stats"
+            - name: "STATS_API_KEY"
+              value: "6m5pfzvductn6jsbgywgjurp"
+            - name: "STATS_API_SECRET"
+              value: "fWvzshN2mV"
+            - name: "STATS_API_HOST"
+              value: "http://api.stats.com"
+            - name: "STATS_API_VERSION"
+              value: "v1"
+            - name: "GAME_DATA_HOST"
+              value: "10.244.0.136:5015"
+            - name: "GRPC_PORT"
+              value: "5003"

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-user-data
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-user-data
+  template:
+    metadata:
+      labels:
+        app: service-user-data
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-user-data
+          image: fanclashdevelopers/service.user-data:v1.0.5
+          env:
+            - name: "NODE_ENV"
+              value: "production"
+            - name: "FANCLASH_ENV"
+              value: "production"
+            - name: "APP_ENV"
+              value: "production"
+            - name: "OBSCURE_SYMBOL"
+              value: "'#'"
+            - name: "SENTRY_DNS"
+              value: "https://d08dfbd415f247c3991bad7bae4cc99a@sentry.io/1400190"
+            - name: "RELEASE"
+              value: "fanclashdevelopers/service.user-data"
+            - name: "PGHOST"
+              value: "database-fanclash-staging-za.postgres.database.azure.com"
+            - name: "PGDATABASE"
+              value: "user_data"
+            - name: "PGUSER"
+              value: "PenroseAdmin@database-fanclash-staging-za"
+            - name: "PGPASSWORD"
+              value: "PenDevClashers101!"
+            - name: "PGPORT"
+              value: "5432"

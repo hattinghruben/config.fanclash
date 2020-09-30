@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fanclash-vodacom-sa-web
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fanclash-vodacom-sa-web
+  template:
+    metadata:
+      labels:
+        app: fanclash-vodacom-sa-web
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: fanclash-vodacom-sa-web
+          image: fanclashdevelopers/fanclash-vodacom-sa-web:v1.4.13
+          ports:
+          - containerPort: 8080
+          env:
+            - name: "NODE_ENV"
+              value: "production"
+            - name: "APP_TIMEZONE"
+              value: "Africa/Johannesburg"
+            - name: "ASSET_HOST"
+              value: "https://fanclash.blob.core.windows.net/fanclash-web-portal/vodacom-sa/V5"
+            - name: "GAME_HOST"
+              value: "http://40.127.10.167:5000"
+            - name: "SUBS_HOST"
+              value: "https://247spinandwin.com/api"
+            - name: "CRIPTO_SECRET"
+              value: "secret"
+            - name: "SESSION_KEYS"
+              value: "foo,bar,baz"
+            - name: "APP_SECRET"
+              value: "secret"
+            - name: "PINGDOM_TRACKING_ID"
+              value: "pa-5c1d5e011872b5001600009d"
+      imagePullSecrets:
+        - name: regsecret-fanclash

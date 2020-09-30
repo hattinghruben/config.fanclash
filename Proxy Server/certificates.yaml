@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Cluster
+metadata:
+  name: tls-secret
+  namespace: ingress-basic
+spec:
+  secretName: tls-secret
+  dnsNames:
+    - staging.vodacomfantasy.com
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - staging.vodacomfantasy.com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

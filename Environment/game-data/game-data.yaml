@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-game-data
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-game-data
+  template:
+    metadata:
+      labels:
+        app: service-game-data
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-game-data
+          image: fanclashdevelopers/service.game-data:v1.0
+          env:
+            - name: "APP_ENV"
+              value: "production"
+            - name: "PORT"
+              value: "5001"
+            - name: "ADMIN_PORT"
+              value: "8084"
+            - name: "GRPC_PORT"
+              value: "5015"
+            - name: "APP_TIMEZONE"
+              value: "Africa/Johannesburg"
+            - name: "PGHOST"
+              value: "database-fanclash-staging-za.postgres.database.azure.com"
+            - name: "PGDATABASE"
+              value: "game_data"
+            - name: "PGUSER"
+              value: "PenroseAdmin@database-fanclash-staging-za"
+            - name: "PGPASSWORD"
+              value: "PenDevClashers101!"
+            - name: "PGPORT"
+              value: "5432"
+            - name: "ADMIN_NAMESPACE"
+              value: "game-data"
+            - name: "GAME_STATS_HOST"
+              value: "10.244.0.133:5003"
+            - name: "STATS_SEASON"
+              value: "2020"
+            - name: "APP_TIMEZONE"
+              value: "Africa/Johannesburg"

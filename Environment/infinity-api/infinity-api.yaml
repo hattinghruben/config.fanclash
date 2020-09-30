@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infinity-api
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infinity-api
+  template:
+    metadata:
+      labels:
+        app: infinity-api
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: infinity-api
+          image: fanclashdevelopers/infinity-api:v1.11.2
+          env:
+            - name: "APP_ENV"
+              value: "production"
+            - name: "NODE_ENV"
+              value: "production"
+            - name: "APP_NAME"
+              value: "MTN Soccer Fantasy League"
+            - name: "DCB_HOST"
+              value: "http:10.0.77.56"
+            - name: "GAME_ENTRIES_HOST"
+              value: "10.244.0.135:5015"
+            - name: "USER_DATA_HOST"
+              value: "10.244.0.99:5006"
+            - name: "VOUCHER_VAULT_HOST"
+              value: "http:10.0.77.56"
+            - name: "AUTOLOGIN_HOST"
+              value: "http:10.0.77.56"
+            - name: "SMS_HOST"
+              value: "http:10.0.77.56"
+            - name: "CORS_DOMAIN"
+              value: "http://localhost:8080"
+            - name: "FANCLASH_HOST"
+              value: "http://10.0.77.56"
+            - name: "PGHOST"
+              value: "database-fanclash-staging-za.postgres.database.azure.com"
+            - name: "PGDATABASE"
+              value: "infinity_api"
+            - name: "PGUSER"
+              value: "PenroseAdmin@database-fanclash-staging-za"
+            - name: "PGPASSWORD"
+              value: "PenDevClashers101!"
+            - name: "PGPORT"
+              value: "5432"
+            - name: "SESSION_KEYS"
+              value: "EsgoYxPavvBYcVBAZN,ADZJJmRbAQMaCWdkGQ,QTuywTPVDYVsJKjdUh"
+            - name: "STATSD_HOST"
+              value: "http://10.103.233.87"
+            - name: "STATSD_PORT"
+              value: "8125"
+            - name: "STATSD_PREFIX"
+              value: "infinity_api"
+            - name: "MODULES"
+              value: "login,dcb,gameEntries,userData,autoLogin"

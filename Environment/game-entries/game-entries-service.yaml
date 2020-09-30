@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-game-entries
+  namespace: vodacom-staging
+spec:
+  type: ClusterIP
+  ports:
+    - name: application
+      port: 80
+      targetPort: 8085
+    - name: grpc-server
+      port: 5000
+      targetPort: 5015
+  selector:
+    app: service-game-entries

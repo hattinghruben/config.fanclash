@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-fanclash-user-middleware
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-fanclash-user-middleware
+  template:
+    metadata:
+      labels:
+        app: service-fanclash-user-middleware
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-fanclash-user-middleware
+          image: fanclashdevelopers/service.fanclash.user-middleware:v1.0.8
+          env:
+            - name: "PORT"
+              value: "5000"
+            - name: "UPSTREAM_HOST"
+              value: "http://91.241.94.49"
+            - name: "UPSTREAM_PORT"
+              value: "9011"
+            - name: "DATABASE_USERNAME"
+              value: "PenroseAdmin"
+            - name: "DATABASE_PASSWORD"
+              value: "PenDevClashers101!"
+            - name: "DATABASE_SERVER"
+              value: "database-fanclash-za.database.windows.net"
+            - name: "DATABASE_NAME"
+              value: "database-fanclash-za-Utils"

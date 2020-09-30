@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: vodacom-staging-ingress
+  namespace: vodacom-staging
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  tls:
+    - hosts:
+        - staging.vodacomfantasy.com
+        - admin.staging.vodacomfantasy.com
+      secretName: tls-secret
+  rules:
+    - host: staging.vodacomfantasy.com
+      http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: fanclash-vodacom-sa-web
+              servicePort: 80
+          - path: /api/?(.*)
+            backend:
+              serviceName: infinity-api
+              servicePort: 80
+    - host: admin.staging.vodacomfantasy.com
+      http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: service-game-entries
+              servicePort: 80
