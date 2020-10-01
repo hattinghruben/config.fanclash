@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: utils-ingress
+  namespace: utils
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  tls:
+    - hosts:
+        - utils.vodacomfantasy.com
+      secretName: tls-secret
+  rules:
+    - host: utils.vodacomfantasy.com
+      http:
+        paths:
+          - path: /wapMiddleware/?(.*)
+            backend:
+              serviceName: vodacom-wap-gateway-middleware
+              servicePort: 80
+          - path: /userDataDecryption/?(.*)
+            backend:
+              serviceName: service-user-data-decryption
+              servicePort: 80
