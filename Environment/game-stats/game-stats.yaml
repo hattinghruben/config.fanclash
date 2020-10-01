@@ -34,6 +34,6 @@ spec:
             - name: "STATS_API_VERSION"
               value: "v1"
             - name: "GAME_DATA_HOST"
-              value: "10.244.0.136:5015"
+              value: "10.0.38.92:5000"
             - name: "GRPC_PORT"
               value: "5003"

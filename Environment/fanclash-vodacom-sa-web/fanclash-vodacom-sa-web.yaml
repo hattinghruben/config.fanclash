@@ -28,7 +28,7 @@ spec:
             - name: "ASSET_HOST"
               value: "https://fanclash.blob.core.windows.net/fanclash-web-portal/vodacom-sa/V5"
             - name: "GAME_HOST"
-              value: "http://40.127.10.167:5000"
+              value: "/api"
             - name: "SUBS_HOST"
               value: "https://247spinandwin.com/api"
             - name: "CRIPTO_SECRET"

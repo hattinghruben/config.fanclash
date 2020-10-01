@@ -44,7 +44,7 @@ spec:
             - name: "ADMIN_NAMESPACE"
               value: "game-data"
             - name: "GAME_STATS_HOST"
-              value: "10.244.0.133:5003"
+              value: "10.0.182.5:5000"
             - name: "STATS_SEASON"
               value: "2020"
             - name: "APP_TIMEZONE"
