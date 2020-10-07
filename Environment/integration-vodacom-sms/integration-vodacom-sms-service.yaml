@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: integration-vodacom-sms
+  namespace: vodacom-staging
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: integration-vodacom-sms

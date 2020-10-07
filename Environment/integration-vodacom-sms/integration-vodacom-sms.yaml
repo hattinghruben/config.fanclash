@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-vodacom-sms
+  namespace: vodacom-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integration-vodacom-sms
+  template:
+    metadata:
+      labels:
+        app: integration-vodacom-sms
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: integration-vodacom-sms
+          image: fanclashdevelopers/integration-vodacom-sms:v1.0.0
+          env:
+            - name: "APP_ENV"
+              value: "development"
+            - name: "NODE_ENV"
+              value: "development"
+            - name: "FANCLASH_ENV"
+              value: "development"
+            - name: "SENTRY_DSN"
+              value: "https://d08dfbd415f247c3991bad7bae4cc99a@sentry.io/1400190"
+            - name: "SMS_BIND_HOST"
+              value: "http://192.168.192.68:7444/dcb"
+            - name: "BASIC_AUTH_USERNAME"
+              value: "FANCLASH"
+            - name: "BASIC_AUTH_PASSWORD"
+              value: "L}Qy2s^fheU<>smE"
+            - name: "SMS_BIND_USERNAME"
+              value: "FanClashSMS"
+            - name: "SMS_BIND_PASSWORD"
+              value: "Hndl452MHAudyr"
+            - name: "SMS_BIND_LONG_CODE"
+              value: "27820092264"
+            - name: "SLACK_WEBHOOK_URI"
+              value: "https://hooks.slack.com/services/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"
+            - name: "STATSD_HOST"
+              value: "http://10.103.233.87"
+            - name: "STATSD_PORT"
+              value: "8125"
+            - name: "STATSD_PREFIX"
+              value: "sms_integration"
