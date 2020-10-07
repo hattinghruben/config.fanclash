@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-user-data-decryption
+  namespace: utils-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-user-data-decryption
+  template:
+    metadata:
+      labels:
+        app: service-user-data-decryption
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-user-data-decryption
+          image: fanclashdevelopers/service.user-data-decryption:v1.0.2
+          env:
+            - name: "PORT"
+              value: "5000"

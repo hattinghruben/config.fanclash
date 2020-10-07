@@ -65,3 +65,5 @@ spec:
               value: "infinity_api"
             - name: "MODULES"
               value: "login,dcb,gameEntries,userData,autoLogin"
+            - name: "USER_DATA_DECRYPTION_HOST"
+              value: "10.0.114.241"

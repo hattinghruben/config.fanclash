@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-wap-gateway-middleware
+  namespace: utils-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-wap-gateway-middleware
+  template:
+    metadata:
+      labels:
+        app: service-wap-gateway-middleware
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      imagePullSecrets:
+        - name: regsecret-fanclash
+      containers:
+        - name: service-wap-gateway-middleware
+          image: fanclashdevelopers/service.wap-gateway-middleware:v1.0.1
+          env:
+            - name: "PORT"
+              value: "5000"
